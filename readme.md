@@ -2,7 +2,7 @@ MOD-IO2
 
 ----------
 
-firmware 3.02
+firmware 4.03
 
 ----------
 
@@ -78,9 +78,9 @@ Make sure to check the schematic for locations and possible multiplexing
 
 of the analog input you have chosen for your tests.
 
-2. I2C Commands:
+**2. I2C Commands:**
 
-\* SET\_TRIS(0x01):
+\* **SET\_TRIS**(0x01):
 
 Define port direction of the gpio pins. Can be INPUT or OUTPUT.
 
@@ -108,7 +108,7 @@ directions. GPIO0 - bit0, GPIO1 - bit1, etc ...
 
 0x7F - all input, 0x00 - all outputs)
 
-\* SET\_LAT(0x02):
+\* **SET\_LAT**(0x02):
 
 Set the output level of gpio. In the bitmask 1 corespond to logical
 
@@ -128,13 +128,11 @@ ADDRESS = 0x21
 
 SET\_LAT = 0x02
 
-VALUE = 0b0dddxdddthe bitmask, where bit0 is the value for
-
-GPIO0, bit1 - GPIO1, etc. bit3 is
+VALUE = 0b0dddxdddthe bitmask, where bit0 is the value for GPIO0, bit1 - GPIO1, etc. bit3 is
 
 x - doesn't care.
 
-\* GET\_PORT(0x03):
+\* **GET\_PORT**(0x03):
 
 Read current level of the GPIOs. The data will be valid if the
 
@@ -172,15 +170,15 @@ SET\_PU = 0x04
 
 VALUE = 0b000dxddd - bit0 coresponding to GPIO0, as "1" enables the pullup and "0" - disables it.
 
-\* GET\_AN0(0x10) on GPIO0:
+\* **GET\_AN0**(0x10) on GPIO0:
 
- GET\_AN1(0x11) on GPIO1:
+ **GET\_AN1**(0x11) on GPIO1:
 
- GET\_AN2(0x12) on GPIO2:
+ **GET\_AN2**(0x12) on GPIO2:
 
- GET\_AN6(0x13) on GPIO3:
+ **GET\_AN6**(0x13) on GPIO3:
 
- GET\_AN7(0x15) on GPIO5:
+ **GET\_AN7**(0x15) on GPIO5:
 
 Read the voltage applied on any of the GPIOs mentioned above. If GPIO is configured as output, the execution the the command will set the GPIO as input. After the applied voltage is measured, the GPIO configuration will be as INPUT. After READ the master should read 2 bytes of data: HIGH and LOW byte.
 
@@ -200,7 +198,7 @@ DATA\_L = the byte that contains the low 8 bits of the adc value
 
 DATA\_H = the byte that contains the high bits of the adc value
 
-\* GET\_ID(0x20):
+\* **GET\_ID**(0x20):
 
 Read the ID of the MOD-IO2. By default it must be 0x23.
 
@@ -218,7 +216,7 @@ GET\_ID = 0x20
 
 DATA = should be 0x23
 
-\* SET\_REL(0x40):
+\* **SET\_REL**(0x40):
 
 Turn on or off the two relays. The data is the state of the relays. Bit0 is the state of RELAY1, and
 
@@ -242,7 +240,7 @@ DATA = 0x01,0x02 or 0x03
 
 NEW COMMANDS AFTER FV 3.02
 
-\* GET\_FV(0x21):
+\* **GET\_FV**(0x21):
 
 Read the Firmware version of the MOD-IO2.
 
@@ -260,7 +258,7 @@ GET\_FV = 0x21
 
 DATA = Firmware version
 
-\* SET\_RELON(0x41):
+\* **SET\_RELON**(0x41):
 
 Turn on the relays. The data is the mask of afected relays. Bit0 is for RELAY1, and
 
@@ -280,7 +278,7 @@ SET\_RELON = 0x41
 
 DATA = 1,2 or 3
 
-\* SET\_RELOFF(0x42):
+\* **SET\_RELOFF**(0x42):
 
 Turn off the relays. The data is the mask of afected relays. Bit0 is for RELAY1, and
 
@@ -300,7 +298,7 @@ SET\_RELOFF = 0x42
 
 DATA = 1,2 or 3
 
-\* GET\_RELAY(0x43):
+\* **GET\_RELAY**(0x43):
 
 Read state of relays of the MOD-IO2. The readed data is the state of the relays. Bit0 is the state of RELAY1, and
 
@@ -320,7 +318,7 @@ GET\_ID = 0x43
 
 READED DATA = should be 0,1 or 3
 
-\* OPEN\_PWM1(0x51):
+\* **OPEN\_PWM1**(0x51):
 
 Open PWM1 and set duty cicle.
 
@@ -338,7 +336,7 @@ OPEN\_PWM1 = 0x51
 
 DATA = 0x00..0xFF
 
-\* OPEN\_PWM2(0x52):
+\* **OPEN\_PWM2**(0x52):
 
 Open PWM2 and set duty cicle.
 
@@ -356,7 +354,7 @@ OPEN\_PWM1 = 0x52
 
 DATA = 0x00..0xFF
 
-\* CLOSE\_PWM(0x50):
+\* **CLOSE\_PWM**(0x50):
 
 Close PWMx and set GPIOx as input.
 
@@ -373,6 +371,24 @@ ADDRESS = 0x21 (the default address)
 CLOSE\_PWM1 = 0x50
 
 DATA = 1 or 2
+
+\* **SET\_DAC**(0x60):
+
+Set DACOUT1 and configure GPIO2 as Analog OUT.
+
+Example:
+
+--------
+
+START | ADDRESS | W | ACK | SET\_DAC | ACK | DATA | ACK | STOP
+
+where:
+
+ADDRESS = 0x21 (the default address)
+
+SET\_DAC = 0x60
+
+DATA = 0..0x1F
 
 3.Examples:
 
@@ -513,6 +529,8 @@ i2cset 2 0x21 0xHH where HH is new addres in hexadimal format
 If you forget the number of the address you can use the modio2tool to find the address, the command and parameter would be "modio2tool -l". You can also reset the default address (0x21) with the command and parameter "modio2tool -X".
 
 4.Release history:
+
+18 OCT 2018 – Released version 4.03 of the firmware – some bugs fixed, added Analog OUT future on GPIO2
 
 26 MAY 2015 - Released version 3.02 of the firmware - added new features, README revised.
 
