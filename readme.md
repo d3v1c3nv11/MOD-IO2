@@ -152,7 +152,7 @@ GET\_PORT = 0x03
 
 DATA = 0x0ddddddd - the bitmask containing the GPIOs status. bit0 - GPIO0, bit1 - GPIO1, etc.
 
-\* SET\_PU(0x04):
+\* **SET\_PU(0x04):
 
 Turn on or off weak pullup. GPIOs must be configured as INPUTS. Note that only GPIO0 to GPIO4 have pullups, and GPIO3 is with pullup always enabled.
 
