@@ -172,13 +172,13 @@ VALUE = 0b000dxddd - bit0 coresponding to GPIO0, as "1" enables the pullup and "
 
 \* **GET\_AN0**(0x10) on GPIO0:
 
- **GET\_AN1**(0x11) on GPIO1:
+\* **GET\_AN1**(0x11) on GPIO1:
 
- **GET\_AN2**(0x12) on GPIO2:
+\* **GET\_AN2**(0x12) on GPIO2:
 
- **GET\_AN6**(0x13) on GPIO3:
+\* **GET\_AN6**(0x13) on GPIO3:
 
- **GET\_AN7**(0x15) on GPIO5:
+\* **GET\_AN7**(0x15) on GPIO5:
 
 Read the voltage applied on any of the GPIOs mentioned above. If GPIO is configured as output, the execution the the command will set the GPIO as input. After the applied voltage is measured, the GPIO configuration will be as INPUT. After READ the master should read 2 bytes of data: HIGH and LOW byte.
 
